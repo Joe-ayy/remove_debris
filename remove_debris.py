@@ -64,7 +64,6 @@ class HandleTrajectoryData:
 
     def paint_path(self, draw, brush_size, step_size, initial_time, brush_color="white"):
         temp_brush = "b1"  # Brush name
-        og_background = pdb.gimp_context_get_background()  # Saves the original background palette color
         og_foreground = pdb.gimp_context_get_foreground()  # Saves the original foreground palette color
         pdb.gimp_context_set_foreground(brush_color)  # Sets the foreground palette color to the brush color
         temp_brush = pdb.gimp_brush_new(temp_brush)  # Creates a new brush
@@ -147,7 +146,7 @@ def get_offsets(offset_file):
         line = file.readline()
 
     # Locate the x and y position based on the first instance of the : (colon) character
-    x_start = line.find(":" )
+    x_start = line.find(":")
     y_start = line.find(' ', x_start + 2)
     y_end = line.find('\n', y_start + 1)
 
@@ -166,21 +165,21 @@ def get_offsets(offset_file):
 # change this so that background colors are only saved once
 def paint_over(drw, x, y, cart_size):
     brush_color = "white"
-    temp_brush = "b1" # Brush name
-    center = [x, y] # Center of brush
-    og_background = pdb.gimp_context_get_background() # Saves the original background palette color
-    og_foreground = pdb.gimp_context_get_foreground() # Saves the original foreground palette color
-    pdb.gimp_context_set_foreground(brush_color)      # Sets the foreground palette color to the brush color
-    temp_brush = pdb.gimp_brush_new(temp_brush)       # Creates a new brush
-    pdb.gimp_brush_set_shape(temp_brush, 0)           # Sets the new brush to a circle
-    pdb.gimp_brush_set_radius(temp_brush, 1000)       # Sets the radius of the brush in pixels
-    pdb.gimp_context_set_brush_size(cart_size)        # Sets the brush size to the desired size
-    pdb.gimp_brush_set_hardness(temp_brush, 100)      # Sets the hardness of the brush
-    pdb.gimp_context_set_opacity(100)                 # Sets the opacity of the brush
-    pdb.gimp_pencil(drw, 2, center)                   # Paint in the drawable using the center points
-    pdb.gimp_context_set_background(og_background)    # When done using the pencil, reset the values for
-    pdb.gimp_context_set_foreground(og_foreground)    # the background and foreground colors previously set
-    pdb.gimp_brush_delete(temp_brush)                 # Delete the brush
+    temp_brush = "b1"  # Brush name
+    center = [x, y]  # Center of brush
+    og_background = pdb.gimp_context_get_background()  # Saves the original background palette color
+    og_foreground = pdb.gimp_context_get_foreground()  # Saves the original foreground palette color
+    pdb.gimp_context_set_foreground(brush_color)       # Sets the foreground palette color to the brush color
+    temp_brush = pdb.gimp_brush_new(temp_brush)        # Creates a new brush
+    pdb.gimp_brush_set_shape(temp_brush, 0)            # Sets the new brush to a circle
+    pdb.gimp_brush_set_radius(temp_brush, 1000)        # Sets the radius of the brush in pixels
+    pdb.gimp_context_set_brush_size(cart_size)         # Sets the brush size to the desired size
+    pdb.gimp_brush_set_hardness(temp_brush, 100)       # Sets the hardness of the brush
+    pdb.gimp_context_set_opacity(100)                  # Sets the opacity of the brush
+    pdb.gimp_pencil(drw, 2, center)                    # Paint in the drawable using the center points
+    pdb.gimp_context_set_background(og_background)     # When done using the pencil, reset the values for
+    pdb.gimp_context_set_foreground(og_foreground)     # the background and foreground colors previously set
+    pdb.gimp_brush_delete(temp_brush)                  # Delete the brush
 
 
 def run_script(timg, tdrw, b_size, step_size, b_color):
@@ -192,8 +191,8 @@ def run_script(timg, tdrw, b_size, step_size, b_color):
     drw = pdb.gimp_image_get_active_drawable(img)
 
     # Convert the image to gray-scale as a precaution
-    #pdb.gimp_image_conver_grayscale(img)
-    pdb.gimp_image_convert_rgb(img)
+    pdb.gimp_image_convert_grayscale(img)
+    #pdb.gimp_image_convert_rgb(img)
 
     # Get the path to the file that is currently being worked on
     file_path = pdb.gimp_image_get_filename(gimp.image_list()[0])
