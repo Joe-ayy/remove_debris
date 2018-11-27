@@ -86,8 +86,8 @@ class HandleTrajectoryData:
             center = [self.position_data[i][0], self.position_data[i][1]]  # Center of brush
             pdb.gimp_pencil(draw, 2, center)  # Paint in the drawable using the center points
 
-        pdb.gimp_context_set_background(og_background)  # When done using the pencil, reset the values for
-        pdb.gimp_context_set_foreground(og_foreground)  # the background and foreground colors previously set
+        # When done using the pencil, reset the value for the foreground color previously set
+        pdb.gimp_context_set_foreground(og_foreground)
         pdb.gimp_brush_delete(temp_brush)  # Delete the brush
 
 
