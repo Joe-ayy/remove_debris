@@ -6,7 +6,7 @@ import time
 import os
 import re
 
-sys.stdout = open('C:\\Users\\100062056\\Documents\\remove_debris_testing.txt', 'w')
+#sys.stdout = open('C:\\Users\\100062056\\Documents\\remove_debris_testing.txt', 'w')
 
 
 # Create a class to handle the data of the trajectory file
