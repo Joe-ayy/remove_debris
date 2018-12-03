@@ -1,12 +1,9 @@
 #!/usr/bin/env python
 
 from gimpfu import *
-import sys
 import time
 import os
 import re
-
-sys.stdout = open('C:\\Users\\100062056\\Documents\\remove_debris_testing.txt', 'w')
 
 
 # Create a class to handle the data of the trajectory file
@@ -171,10 +168,6 @@ def run_script(timg, tdrw, b_size, step_size, b_color):
     img = gimp.image_list()[0]
     drw = pdb.gimp_image_get_active_drawable(img)
 
-    # Convert the image to gray-scale as a precaution
-    #pdb.gimp_image_convert_grayscale(img)
-    pdb.gimp_image_convert_rgb(img)
-
     # Get the path to the file that is currently being worked on
     file_path = pdb.gimp_image_get_filename(gimp.image_list()[0])
 
@@ -200,9 +193,6 @@ def run_script(timg, tdrw, b_size, step_size, b_color):
     # Add the offsets to the trajectory data
     walk_path_data.add_offsets(x_pix_offset, y_pix_offset)
 
-    # Dictate the brush size
-    #b_size = 14
-
     # Flip the image before painting the path
     pdb.gimp_image_flip(img, 1)
 
@@ -225,9 +215,9 @@ register(
     "<Image>/Tools/Transform Tools/_Remove Debris",
     "RGB*, GRAY*",
     [
-        (PF_INT, "b_size", "Enter the brush size (no less than 10): ", 10),
-        (PF_INT, "step_size", "Enter the step size (how much to divide the number of passes by): ", 1),
-        (PF_STRING, "b_color", "Enter the brush color: ", "blue")
+        (PF_INT, "b_size", "Enter the brush size (pick something around 20): ", 20),
+        (PF_INT, "step_size", "Enter path covering consistency (1, 2, or 4): ", 2),
+        (PF_STRING, "b_color", "Enter the brush color: ", "white")
     ],
     [],
     run_script)
