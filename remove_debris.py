@@ -6,7 +6,7 @@ import time
 import os
 import re
 
-#sys.stdout = open('C:\\Users\\100062056\\Documents\\remove_debris_testing.txt', 'w')
+#sys.stdout = open('C:\\Users\\100062393\\Documents\\remove_debris_testing.txt', 'w')
 
 
 # Create a class to handle the data of the trajectory file
@@ -165,54 +165,55 @@ def get_offsets(offset_file):
 
 def run_script(timg, tdrw, b_size, step_size, b_color):
     # Measure the amount of time that has elapsed while the program is running
-    init_time = time.time()
+	init_time = time.time()
 
-    # Get the image and drawable to allow the plugin to modify the dirty map
-    img = gimp.image_list()[0]
-    drw = pdb.gimp_image_get_active_drawable(img)
-
-    # Convert the image to gray-scale as a precaution
-    #pdb.gimp_image_convert_grayscale(img)
-    pdb.gimp_image_convert_rgb(img)
-
+	# Get the image and drawable to allow the plugin to modify the dirty map
+	img = gimp.image_list()[0]
+	drw = pdb.gimp_image_get_active_drawable(img)
+	
+	# Convert the image to gray-scale as a precaution
+	if pdb.gimp_drawable_is_rgb(drw) == True:
+		pdb.gimp_image_convert_grayscale(img)
+	
+	#pdb.gimp_image_convert_rgb(img)
     # Get the path to the file that is currently being worked on
-    file_path = pdb.gimp_image_get_filename(gimp.image_list()[0])
+	file_path = pdb.gimp_image_get_filename(gimp.image_list()[0])
 
     # Get the path to the directory we need to pull files from
-    working_dir_path = get_dir_path(file_path)
+	working_dir_path = get_dir_path(file_path)
 
     # Get the full file paths for the .info (offset) and .ply (trajectory) files
-    file_paths = FilePathHandler(working_dir_path)
+	file_paths = FilePathHandler(working_dir_path)
 
     # Specify the full file paths for .info and .ply files
-    full_offset_file_path = file_paths.info_file_path
-    full_trajectory_file_path = file_paths.trajectory_file_path
+	full_offset_file_path = file_paths.info_file_path
+	full_trajectory_file_path = file_paths.trajectory_file_path
 
     # Get the offset values
-    x_pix_offset, y_pix_offset = get_offsets(full_offset_file_path)
+	x_pix_offset, y_pix_offset = get_offsets(full_offset_file_path)
 
     # Load in the trajectory file
-    walk_path_data = HandleTrajectoryData(full_trajectory_file_path)
+	walk_path_data = HandleTrajectoryData(full_trajectory_file_path)
 
     # Convert the trajectory data from meters to pixels (note: data must be rounded from float to int)
-    walk_path_data.convert_to_pixels()
+	walk_path_data.convert_to_pixels()
 
     # Add the offsets to the trajectory data
-    walk_path_data.add_offsets(x_pix_offset, y_pix_offset)
+	walk_path_data.add_offsets(x_pix_offset, y_pix_offset)
 
-    # Dictate the brush size
+	# Dictate the brush size
     #b_size = 14
 
     # Flip the image before painting the path
-    pdb.gimp_image_flip(img, 1)
+	pdb.gimp_image_flip(img, 1)
 
-    # Paint the path
-    walk_path_data.paint_path(drw, b_size, step_size, init_time, b_color)
+	# Paint the path
+	walk_path_data.paint_path(drw, b_size, step_size, init_time, b_color)
 
-    # Flip the image back after painting the path
-    pdb.gimp_image_flip(img, 1)
-
-    return
+	# Flip the image back after painting the path
+	pdb.gimp_image_flip(img, 1)
+	
+	return
 
 
 register(
@@ -225,9 +226,9 @@ register(
     "<Image>/Tools/Transform Tools/_Remove Debris",
     "RGB*, GRAY*",
     [
-        (PF_INT, "b_size", "Enter the brush size (no less than 10): ", 10),
+        (PF_INT, "b_size", "Enter the brush size (no less than 10): ", 12),
         (PF_INT, "step_size", "Enter the step size (how much to divide the number of passes by): ", 1),
-        (PF_STRING, "b_color", "Enter the brush color: ", "blue")
+        (PF_STRING, "b_color", "Enter the brush color: ", "white")
     ],
     [],
     run_script)
