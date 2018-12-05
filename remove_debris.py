@@ -208,7 +208,7 @@ register(
     "Joey Harrison & Jair Pedroza",
     "J.H. & J.P.",
     "11/18",
-    "<Image>/Tools/Transform Tools/_Remove Debris",
+    "<Image>/Tools/Transform Tools/Map Cleanup/_Remove Debris",
     "RGB*, GRAY*",
     [
         (PF_INT, "b_size", "Enter the brush size (Leave at 20 unless structures are getting erased): ", 20),
