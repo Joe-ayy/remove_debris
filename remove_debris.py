@@ -211,7 +211,7 @@ register(
     "<Image>/Tools/Transform Tools/Map Cleanup/_Remove Debris",
     "RGB*, GRAY*",
     [
-        (PF_INT, "b_size", "Enter the brush size (Leave at 20 unless structures are getting erased): ", 20),
+        (PF_INT, "b_size", "Enter the brush size (Leave at 20, use 18 if structures are being deleted): ", 20),
         (PF_INT, "step_size", "Enter path covering consistency (Leave at 2 for the time being): ", 2)
     ],
     [],
