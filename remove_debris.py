@@ -65,7 +65,6 @@ class HandleTrajectoryData:
         pdb.gimp_context_set_foreground(brush_color)  # Sets the foreground palette color to the brush color
         temp_brush = pdb.gimp_brush_new(temp_brush)  # Creates a new brush
         pdb.gimp_brush_set_shape(temp_brush, 0)  # Sets the new brush to a circle
-        pdb.gimp_brush_set_radius(temp_brush, 1000)  # Sets the radius of the brush in pixels
         pdb.gimp_brush_set_hardness(temp_brush, 100)  # Sets the hardness of the brush
         pdb.gimp_context_set_opacity(100)  # Sets the opacity of the brush
         pdb.gimp_context_set_brush(temp_brush)  # Sets the brush to the active brush
@@ -128,15 +127,12 @@ def get_dir_path(image_path):
     dir_path = image_path[:delimiter2]
     dir_path = dir_path.replace('\\', '/')
 
-    # Testing
-    print(dir_path)
-
     # Return the path to the needed directory
     return dir_path
 
 
 def get_offsets(offset_file):
-    # Open the file for reading and read the first (1 + 4) => 5 lines to skip over header information
+    # Open the file for reading and read the first (1 + 5) => 6 lines to skip over header information
     file = open(offset_file, 'r')
     line = file.readline()
 
@@ -151,10 +147,6 @@ def get_offsets(offset_file):
     # Set the values of the offset
     x_offset = int(line[x_start + 2: y_start])
     y_offset = int(line[y_start + 1: y_end])
-
-    # Testing
-    print("X offset: ", x_offset)
-    print("Y offset: ", y_offset)
 
     # Return the offset values
     return x_offset, y_offset
@@ -215,9 +207,8 @@ register(
     "<Image>/Tools/Transform Tools/_Remove Debris",
     "RGB*, GRAY*",
     [
-        (PF_INT, "b_size", "Enter the brush size (pick something around 20): ", 20),
-        (PF_INT, "step_size", "Enter path covering consistency (1, 2, or 4): ", 2),
-        (PF_STRING, "b_color", "Enter the brush color: ", "white")
+        (PF_INT, "b_size", "Enter the brush size (Leave at 20 unless structures are getting erased): ", 20),
+        (PF_INT, "step_size", "Enter path covering consistency (Leave at 2 for the time being): ", 2)
     ],
     [],
     run_script)
