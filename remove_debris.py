@@ -152,7 +152,7 @@ def get_offsets(offset_file):
     return x_offset, y_offset
 
 
-def run_script(timg, tdrw, b_size, step_size, b_color):
+def run_script(timg, tdrw, b_size, step_size):
     # Measure the amount of time that has elapsed while the program is running
     init_time = time.time()
 
@@ -189,10 +189,14 @@ def run_script(timg, tdrw, b_size, step_size, b_color):
     pdb.gimp_image_flip(img, 1)
 
     # Paint the path
-    walk_path_data.paint_path(drw, b_size, step_size, init_time, b_color)
+    walk_path_data.paint_path(drw, b_size, step_size, init_time)
 
     # Flip the image back after painting the path
     pdb.gimp_image_flip(img, 1)
+
+    # Convert the image to gray scale if it isn't already
+    if pdb.gimp_drawable_is_rgb(drw):
+        pdb.gimp_image_convert_grayscale(img)
 
     return
 
