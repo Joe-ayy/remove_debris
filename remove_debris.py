@@ -60,6 +60,7 @@ class HandleTrajectoryData:
             self.position_data[i][1] = self.position_data[i][1] + y_offset
 
     def paint_path(self, draw, brush_size, step_size, initial_time, brush_color="white"):
+        og_brush = pdb.gimp_context_get_brush()
         temp_brush = "b1"  # Brush name
         og_foreground = pdb.gimp_context_get_foreground()  # Saves the original foreground palette color
         pdb.gimp_context_set_foreground(brush_color)  # Sets the foreground palette color to the brush color
@@ -86,6 +87,7 @@ class HandleTrajectoryData:
         # When done using the pencil, reset the value for the foreground color previously set
         pdb.gimp_context_set_foreground(og_foreground)
         pdb.gimp_brush_delete(temp_brush)  # Delete the brush
+        pdb.gimp_context_set_brush(og_brush)  # Sets the brush to the original brush
 
 
 class FilePathHandler:
